@@ -7,9 +7,10 @@ public class Main {
     public static void main(String[] args) {
         int[] arr = {7,1,5,8,3,6};
         int end = arr.length-1,
-        numberOfSimulations = 2;
+        numberOfSimulations = 2,
+        maxThreadCap=4;
         ForkJoinPool pool = ForkJoinPool.commonPool();
-
+        pool.setParallelism(maxThreadCap);
 
 
 
