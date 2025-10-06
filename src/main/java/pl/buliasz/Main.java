@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.concurrent.ForkJoinPool;
-import java.util.stream.Collectors;
 
 import static pl.buliasz.IsNumeric.isNumeric;
 
@@ -82,14 +81,14 @@ public class Main {
                 listOfArrays.add("posortowana lista "+Arrays.toString(arrCopy));
                 sortedArrayIn = true;}
         }
-        long average = 0;
+        double average = 0;
         for(Long time: listOfSimulationTimes){
             average += time;
         }
-        average = average/listOfSimulationTimes.size();
+        average = average / (double) listOfSimulationTimes.size();
 
-        listOfSimulationTimesWithText.add("średni czas symulacji : "+ average);
-        Files.write(toSimTime,listOfSimulationTimesWithText,StandardOpenOption.WRITE);
-        Files.write(toArrayOutput,listOfArrays, StandardOpenOption.WRITE);
+        listOfSimulationTimesWithText.add("średni czas symulacji : " + average + "ms");
+        Files.write(toSimTime,listOfSimulationTimesWithText,StandardOpenOption.WRITE,StandardOpenOption.TRUNCATE_EXISTING);
+        Files.write(toArrayOutput,listOfArrays, StandardOpenOption.WRITE,StandardOpenOption.TRUNCATE_EXISTING);
     }
 }
