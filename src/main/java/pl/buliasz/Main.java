@@ -88,7 +88,7 @@ public class Main {
         }
         average = average/listOfSimulationTimes.size();
 
-        listOfSimulationTimesWithText.add("średni czas symulacji : ");
+        listOfSimulationTimesWithText.add("średni czas symulacji : "+ average);
         Files.write(toSimTime,listOfSimulationTimesWithText,StandardOpenOption.WRITE);
         Files.write(toArrayOutput,listOfArrays, StandardOpenOption.WRITE);
     }
