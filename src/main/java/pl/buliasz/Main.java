@@ -1,25 +1,33 @@
 package pl.buliasz;
 
-import java.util.Random;
-import java.util.Scanner;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 import static pl.buliasz.IsNumeric.isNumeric;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         int numberOfSimulations = 1, maxThreadCap = 4, arrLength = 0;
         boolean isOn = true, writeArrayOutput = false, acceptableUserOutput = false;
+        Path toSimTime = Paths.get("output/simulationTime.txt");
+        Path toArrayOutput = Paths.get("output/arrayOutput.txt");
+        List<String> listOfArrays = new ArrayList<>();
+        List<String> listOfSimulationTimes = new ArrayList<>();
 
         System.out.println("""
-                Aplikacja wyczyści pliki jeżeli
-                 nie chcesz stracić danych skopiuj je do innych plików
+                Aplikacja wyczyści pliki arrayOutput.txt i simulationTime.txt
+                jeżeli nie chcesz stracić danych skopiuj je do innych plików
                 (naciśnij enter)""");
         scanner.nextLine();
 
         System.out.println("""
                     
-                     Aby zobaczyć w plikach nie posortowaną oraz posortowaną listę
+                     Aby zobaczyć w pliku arrayOutput.txt nie posortowaną oraz posortowaną listę
                      liczba symulacji nie może przekraczać 10 a długość listy 100
                      
                      """);
@@ -49,6 +57,8 @@ public class Main {
 
         if(arrLength <= 100 && numberOfSimulations <= 10) writeArrayOutput = true;
 
+        if(writeArrayOutput) listOfArrays.add("nie posortowana lista: " + Arrays.toString(arr));
+
         acceptableUserOutput = false;
         while (acceptableUserOutput == false){
             System.out.println("Podaj maksymalną ilość wątków");
@@ -69,11 +79,13 @@ public class Main {
             pool.invoke(new QuickSort(0,end,arrCopy));      //measuring time for each iteration
             long endTime = System.nanoTime();
 
-            long duration = (endTime - startTime);
+            long duration = (endTime - startTime)/1_000_000;    //in ms
 
-            for (int j=0;j<=end;j++){
-                System.out.println(arrCopy[j] + " ");
-            }
+            listOfSimulationTimes.add("czas symulacji nr" + (i + 1) + ": " + duration + " ms");
+            if(writeArrayOutput) listOfArrays.add("lista posortowana nr" + (i + 1) +  ": " + Arrays.toString(arrCopy));
         }
+
+        Files.write(toSimTime,listOfSimulationTimes,StandardOpenOption.WRITE);
+        if(writeArrayOutput) Files.write(toArrayOutput,listOfArrays, StandardOpenOption.WRITE);
     }
 }
