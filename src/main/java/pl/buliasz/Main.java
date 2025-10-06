@@ -45,7 +45,7 @@ public class Main {
         int[] arr = new int[arrLength];
         int end = arr.length-1;
 
-        arr  = ArrRandomiser.fillArrayRandom(arr);
+        ArrRandomiser.fillArrayRandom(arr);  //fill array with random numbers from 0 to 999_999
 
         if(arrLength <= 100 && numberOfSimulations <= 10) writeArrayOutput = true;
 
@@ -62,11 +62,15 @@ public class Main {
         ForkJoinPool pool = ForkJoinPool.commonPool();
         pool.setParallelism(maxThreadCap);
 
-
-
         for(int i=0;i<numberOfSimulations;i++) {
             int[] arrCopy = arr.clone();
-            pool.invoke(new QuickSort(0,end,arrCopy));
+
+            long startTime = System.nanoTime();
+            pool.invoke(new QuickSort(0,end,arrCopy));      //measuring time for each iteration
+            long endTime = System.nanoTime();
+
+            long duration = (endTime - startTime);
+
             for (int j=0;j<=end;j++){
                 System.out.println(arrCopy[j] + " ");
             }
