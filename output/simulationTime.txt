@@ -1,0 +1,10 @@
+czas symulacji nr1: 42 ms
+czas symulacji nr2: 23 ms
+czas symulacji nr3: 17 ms
+czas symulacji nr4: 7 ms
+czas symulacji nr5: 5 ms
+czas symulacji nr6: 6 ms
+czas symulacji nr7: 6 ms
+czas symulacji nr8: 6 ms
+czas symulacji nr9: 3 ms
+czas symulacji nr10: 3 ms

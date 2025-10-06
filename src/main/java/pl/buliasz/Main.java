@@ -7,17 +7,20 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.concurrent.ForkJoinPool;
+import java.util.stream.Collectors;
+
 import static pl.buliasz.IsNumeric.isNumeric;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         int numberOfSimulations = 1, maxThreadCap = 4, arrLength = 0;
-        boolean isOn = true, writeArrayOutput = false, acceptableUserOutput = false;
+        boolean isOn = true, acceptableUserOutput = false, sortedArrayIn = false;
         Path toSimTime = Paths.get("output/simulationTime.txt");
         Path toArrayOutput = Paths.get("output/arrayOutput.txt");
         List<String> listOfArrays = new ArrayList<>();
-        List<String> listOfSimulationTimes = new ArrayList<>();
+        List<String> listOfSimulationTimesWithText = new ArrayList<>();
+        List<Long> listOfSimulationTimes = new ArrayList<>();
 
         System.out.println("""
                 Aplikacja wyczyści pliki arrayOutput.txt i simulationTime.txt
@@ -25,12 +28,6 @@ public class Main {
                 (naciśnij enter)""");
         scanner.nextLine();
 
-        System.out.println("""
-                    
-                     Aby zobaczyć w pliku arrayOutput.txt nie posortowaną oraz posortowaną listę
-                     liczba symulacji nie może przekraczać 10 a długość listy 100
-                     
-                     """);
 
         while (acceptableUserOutput == false){
             System.out.println("Podaj ilośc symulacji do wykonania");
@@ -55,9 +52,8 @@ public class Main {
 
         ArrRandomiser.fillArrayRandom(arr);  //fill array with random numbers from 0 to 999_999
 
-        if(arrLength <= 100 && numberOfSimulations <= 10) writeArrayOutput = true;
 
-        if(writeArrayOutput) listOfArrays.add("nie posortowana lista: " + Arrays.toString(arr));
+        listOfArrays.add("nie posortowana lista: " + Arrays.toString(arr));
 
         acceptableUserOutput = false;
         while (acceptableUserOutput == false){
@@ -80,12 +76,20 @@ public class Main {
             long endTime = System.nanoTime();
 
             long duration = (endTime - startTime)/1_000_000;    //in ms
-
-            listOfSimulationTimes.add("czas symulacji nr" + (i + 1) + ": " + duration + " ms");
-            if(writeArrayOutput) listOfArrays.add("lista posortowana nr" + (i + 1) +  ": " + Arrays.toString(arrCopy));
+            listOfSimulationTimes.add(duration);
+            listOfSimulationTimesWithText.add("czas symulacji nr" + (i + 1) + ": " + duration + " ms");
+            if(!sortedArrayIn){
+                listOfArrays.add("posortowana lista "+Arrays.toString(arrCopy));
+                sortedArrayIn = true;}
         }
+        long average = 0;
+        for(Long time: listOfSimulationTimes){
+            average += time;
+        }
+        average = average/listOfSimulationTimes.size();
 
-        Files.write(toSimTime,listOfSimulationTimes,StandardOpenOption.WRITE);
-        if(writeArrayOutput) Files.write(toArrayOutput,listOfArrays, StandardOpenOption.WRITE);
+        listOfSimulationTimesWithText.add("średni czas symulacji : ");
+        Files.write(toSimTime,listOfSimulationTimesWithText,StandardOpenOption.WRITE);
+        Files.write(toArrayOutput,listOfArrays, StandardOpenOption.WRITE);
     }
 }
