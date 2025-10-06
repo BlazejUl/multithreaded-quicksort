@@ -87,8 +87,12 @@ public class Main {
         }
         average = average / (double) listOfSimulationTimes.size();
 
-        listOfSimulationTimesWithText.add("średni czas symulacji : " + average + "ms");
+        listOfSimulationTimesWithText.add("średni czas symulacji : " + average + " ms");
         Files.write(toSimTime,listOfSimulationTimesWithText,StandardOpenOption.WRITE,StandardOpenOption.TRUNCATE_EXISTING);
         Files.write(toArrayOutput,listOfArrays, StandardOpenOption.WRITE,StandardOpenOption.TRUNCATE_EXISTING);
+
+        System.out.println("Wyniki są w folderze output");
+        System.out.println("(wciśnij enter)");
+        scanner.nextLine();
     }
 }

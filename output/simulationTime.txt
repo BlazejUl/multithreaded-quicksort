@@ -1,0 +1,2 @@
+czas symulacji nr1: 0 ms
+średni czas symulacji : 0.0ms
