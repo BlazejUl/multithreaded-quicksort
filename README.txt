@@ -1,2 +1,1 @@
-aby otworzyć aplikacje należy do tego samego folderu włożyć plik .exe i folder output
-plik .exe działa tylko wtedy gdy ma się zainstalowane środowisko java na windows
+plik exe nie działa trzeba skopiować program i uruchomić go najlepiej i Intelij
