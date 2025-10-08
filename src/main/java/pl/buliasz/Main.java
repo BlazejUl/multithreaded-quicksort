@@ -20,12 +20,13 @@ public class Main {
         List<String> listOfArrays = new ArrayList<>();
         List<String> listOfSimulationTimesWithText = new ArrayList<>();
         List<Long> listOfSimulationTimes = new ArrayList<>();
-
+        /*//for multithreaded-quicksort-needs-jre.exe
         System.out.println("""
                 Aplikacja wyczyści pliki arrayOutput.txt i simulationTime.txt
                 jeżeli nie chcesz stracić danych skopiuj je do innych plików
                 (naciśnij enter)""");
         scanner.nextLine();
+         //*/
 
 
         while (acceptableUserOutput == false){
@@ -87,6 +88,7 @@ public class Main {
         }
         average = average / (double) listOfSimulationTimes.size();
 
+        /*//for multithreaded-quicksort-needs-jre.exe
         listOfSimulationTimesWithText.add("średni czas symulacji : " + average + " ms");
         Files.write(toSimTime,listOfSimulationTimesWithText,StandardOpenOption.WRITE,StandardOpenOption.TRUNCATE_EXISTING);
         Files.write(toArrayOutput,listOfArrays, StandardOpenOption.WRITE,StandardOpenOption.TRUNCATE_EXISTING);
@@ -94,5 +96,21 @@ public class Main {
         System.out.println("Wyniki są w folderze output");
         System.out.println("(wciśnij enter)");
         scanner.nextLine();
+         //*/
+        //for multithreaded-quicksort.msi
+        System.out.println("wciśnij enter aby wyświetlić czasy symulacji");
+        scanner.nextLine();
+        for(String line:listOfSimulationTimesWithText){
+            System.out.println(line);
+        }
+        System.out.println("wciśnij enter aby wyświetlić nie posortowaną i posortowaną tablice");
+        scanner.nextLine();
+        for(String line:listOfArrays){
+            System.out.println(line);
+        }
+        System.out.println("Aby zamknąć aplikacje");
+        System.out.println("(wciśnij enter)");
+        scanner.nextLine();
+        //*/
     }
 }
